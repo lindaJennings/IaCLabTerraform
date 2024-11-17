@@ -15,6 +15,12 @@ provider "aws" {
   region  = "eu-west-1"
 }
 
+# Adding security to the stack
+assume_role_with_web_identity {
+    role_arn           = var.role_arn
+    web_identity_token = var.identity_token
+}
+
 # Specifying instance parameters
 resource "aws_instance" "app_server" {
   ami           = "ami-054a53dca63de757b"

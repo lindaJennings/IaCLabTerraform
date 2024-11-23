@@ -53,6 +53,15 @@ resource "aws_subnet" "private_subnet" {
   }
 }
 
+# Attaching an internet gateway to the public subnet
+resource "aws_internet_gateway" "public_gateway" {
+  vpc_id = aws_vpc.my_vpc.id
+
+  tags = {
+    Name = "Public internet gateway"
+  }
+}
+
 # Specifying instance parameters
 resource "aws_instance" "my_instance" {
   ami           = "ami-054a53dca63de757b"

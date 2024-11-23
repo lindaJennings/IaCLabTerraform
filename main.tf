@@ -97,6 +97,20 @@ resource "aws_route_table_association" "private_route_association" {
 
 }
 
+# Establishing a security group to EC2 instance
+resource "aws_security_group" "instance_security"{
+  name = "EC2 security group"
+  description = "Security group for EC2 instance in VPC"
+  vpc_id = aws_vpc.my_vpc.id
+
+  ingress = {
+    cidr_blocks = ["0.0.0.0/0"]
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+  }
+}
+
 # Specifying instance parameters
 resource "aws_instance" "my_instance" {
   ami           = "ami-054a53dca63de757b"

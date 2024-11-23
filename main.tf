@@ -15,16 +15,13 @@ provider "aws" {
   region  = "eu-west-1"
 }
 
-# Adding security to the stack
-assume_role_with_web_identity {
-    role_arn           = var.role_arn
-    web_identity_token = var.identity_token
-}
-
 # Specifying instance parameters
-resource "aws_instance" "app_server" {
+resource "aws_instance" "my_instance" {
   ami           = "ami-054a53dca63de757b"
   instance_type = "t2.micro"
+  key_name = "myKeyPair"
+  subnet_id = aws_subnet.public_subnet.id
+  vpc_security_group_ids = aws_security_group.instance_security.id
 
 # Adding instance tags
   tags = {

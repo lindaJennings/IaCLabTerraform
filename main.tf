@@ -15,6 +15,24 @@ provider "aws" {
   region  = "eu-west-1"
 }
 
+# Adding vpc with subnets and gateway
+resource "vpc" "my_vpc" {
+  source = "terraform-aws-modules/vpc/aws"
+
+  name = "my-lab-vpc"
+  cidr = "10.0.0.0/16"
+
+  private_subnets = ["10.0.2.0/24"]
+  public_subnets  = ["10.0.1.0/24"]
+
+  enable_vpn_gateway = true
+
+  tags = {
+    Terraform = "true"
+    Environment = "dev"
+  }
+}
+
 # Specifying instance parameters
 resource "aws_instance" "my_instance" {
   ami           = "ami-054a53dca63de757b"

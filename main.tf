@@ -82,6 +82,21 @@ resource "aws_route_table_association" "public_route_association" {
 
 }
 
+# Creating a route table and association for private subnet
+resource "aws_route_table" "private_route_table" {
+  vpc_id = aws_vpc.my_vpc.id
+
+  tags = {
+    Name = "Private route table"
+  }
+}
+
+resource "aws_route_table_association" "private_route_association" {
+  subnet_id = aws_subnet.private_subnet.id
+  route_table_id = aws_route_table.private_route_table.id
+
+}
+
 # Specifying instance parameters
 resource "aws_instance" "my_instance" {
   ami           = "ami-054a53dca63de757b"
